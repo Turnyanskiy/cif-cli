@@ -5,7 +5,7 @@ setup(
     packages= ['cif_cli'],
     entry_points = {
         'console_scripts': [
-            'pycli = pycli.__main__:main'
+            'cif_cli = cif_cli.__main__:main'
         ]
     }
 )
