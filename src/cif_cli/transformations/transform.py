@@ -8,29 +8,33 @@ import numpy as np
 
 
 def get_model(filepath: str) -> Optional[Bio.PDB.Model.Model]:
-    if filepath.lower().endswith('.cif'):
-        return MMCIFParser().get_structure('', filepath)[0]
-    elif filepath.lower().endswith('.pdb'):
-        return PDBParser().get_structure('', filepath)[0]
+    if filepath.lower().endswith(".cif"):
+        return MMCIFParser().get_structure("", filepath)[0]
+    elif filepath.lower().endswith(".pdb"):
+        return PDBParser().get_structure("", filepath)[0]
 
 
-def translate_chain(model: Bio.PDB.Model.Model, chain_char: str, translate: list[float]) -> None:
-    translation_vec = np.array(translate, 'f')
-    
+def translate_chain(
+    model: Bio.PDB.Model.Model, chain_char: str, translate: list[float]
+) -> None:
+    translation_vec = np.array(translate, "f")
+
     chain = model[chain_char]
     residues = chain.get_residues()
-    
+
     for residue in residues:
         for atom in residue.get_atoms():
             atom.transform(rotmat(Vector(0, 0, 0), Vector(0, 0, 0)), translation_vec)
 
 
-def rotate_chain(model: Bio.PDB.Model.Model, chain_char: str, rotate: list[float]) -> None:
+def rotate_chain(
+    model: Bio.PDB.Model.Model, chain_char: str, rotate: list[float]
+) -> None:
     rotation_vec = Vector(*rotate)
 
     chain = model[chain_char]
     residues = chain.get_residues()
-    
+
     for residue in residues:
         for atom in residue.get_atoms():
             atom.transform(rotmat(atom.get_vector(), rotation_vec), np.zeros(3))

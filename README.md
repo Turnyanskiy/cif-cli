@@ -20,6 +20,6 @@ Arguments:
 
 Options:
   -h, --help                            show this help message and exit
-  -t, --translate FLOAT FLOAT FLOAT     translates the chain by vector 
+  -t, --translate FLOAT FLOAT FLOAT     translates the chain by vector
   -r, --rotate FLOAT FLOAT FLOAAT       rotates the chain to the vector
 ```
