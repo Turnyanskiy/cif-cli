@@ -19,12 +19,9 @@ def translate_chain(
 ) -> None:
     translation_vec = np.array(translate, "f")
 
-    chain = model[chain_char]
-    residues = chain.get_residues()
-
-    for residue in residues:
-        for atom in residue.get_atoms():
-            atom.transform(rotmat(Vector(0, 0, 0), Vector(0, 0, 0)), translation_vec)
+    chain_atoms = model[chain_char].get_atoms()
+    for atom in chain_atoms:
+        atom.transform(rotmat(Vector(0, 0, 0), Vector(0, 0, 0)), translation_vec)
 
 
 def rotate_chain(
@@ -32,12 +29,9 @@ def rotate_chain(
 ) -> None:
     rotation_vec = Vector(*rotate)
 
-    chain = model[chain_char]
-    residues = chain.get_residues()
-
-    for residue in residues:
-        for atom in residue.get_atoms():
-            atom.transform(rotmat(atom.get_vector(), rotation_vec), np.zeros(3))
+    chain_atoms = model[chain_char].get_atoms()
+    for atom in chain_atoms:
+        atom.transform(rotmat(atom.get_vector(), rotation_vec), np.zeros(3))
 
 
 def save_model(model, filepath) -> None:
