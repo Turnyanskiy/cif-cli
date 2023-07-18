@@ -1,5 +1,6 @@
 Bio==1.5.9
 biopython==1.81
-numpy==1.24.2
 numpy==1.21.5
 setuptools==59.6.0
+pytest~=7.4.0
+pre-commit

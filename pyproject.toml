@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cif_cli"
+version = "0.1.0"
+authors = [
+  {name = "Luke Turnyanskiy" }
+]
+description = "A cli for transforming pdb/cif files"
+readme = "README.md"
+requires-python = ">3.7"
+dynamic = ["dependencies"]
+
+[project.scripts]
+cif_cli = "cif_cli.__main__:main"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["./src"]
+
