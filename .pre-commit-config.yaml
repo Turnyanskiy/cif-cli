@@ -1,10 +1,13 @@
 default_stages: [commit, push]
 repos:
-  - repo: https://github.com/Turnyanskiy/cif-cli.git
-    rev: v0.1.0
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
     hooks:
     - id: check-yaml
     - id: check-toml
     - id: end-of-file-fixer
     - id: trailing-whitespace
-    - id: black
+  - repo: https://github.com/psf/black
+    rev: 22.10.0
+    hooks:
+      - id: black
