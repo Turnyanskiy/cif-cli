@@ -1,14 +1,12 @@
-# ``cif-cli``
+# `cif-cli`
 
-Installation
----
+## Installation
 
 ```
 ./install.sh
 ```
 
-Usage
----
+## Usage
 
 ```
 Usage:

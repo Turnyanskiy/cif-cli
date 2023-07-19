@@ -1,9 +1,17 @@
+"""Main logic."""
+import sys
+
 from cli import parser
 from transformations import transform
-import sys
 
 
 def main():
+    """Parse args and perform flag processes.
+
+    Get model from args and perform args flag operations on model.
+
+    :return: None
+    """
     args = parser.parse_args(sys.argv[1:])
 
     if model := transform.get_model(args.filepath):

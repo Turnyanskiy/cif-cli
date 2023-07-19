@@ -1,9 +1,11 @@
-import os
-import pytest
-from cif_cli.transformations import transform
-import Bio
-from Bio.PDB.vectors import Vector, rotmat
 import copy
+import os
+
+import Bio
+import pytest
+from Bio.PDB.vectors import Vector, rotmat
+
+from cif_cli.transformations import transform
 
 
 @pytest.mark.parametrize(

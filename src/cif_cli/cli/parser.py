@@ -1,8 +1,15 @@
+"""Parser for cli inputs."""
 from __future__ import annotations
+
 import argparse
 
 
-def parse_args(args) -> argparse.Namespace:
+def parse_args(args: list[str]) -> argparse.Namespace:
+    """Parse args using argparse.
+
+    :param args: Used for tests. Passes flags into function.
+    :return: Object containing parsed args.
+    """
     # define transform parser
     parser = argparse.ArgumentParser()
     transform_parser = parser.add_subparsers(title="subcommand").add_parser("transform")
