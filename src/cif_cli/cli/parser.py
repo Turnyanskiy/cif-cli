@@ -12,11 +12,16 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     """
     # define transform parser
     parser = argparse.ArgumentParser()
-    transform_parser = parser.add_subparsers(title="subcommand").add_parser("transform")
 
-    transform_parser.add_argument("filepath")
+    parser.add_argument("filepath")
+
+    subparser = parser.add_subparsers(title="subcommand", dest="subcommand")
+
+    flexpepdock_parser = subparser.add_parser("flexpepdock")
+    flexpepdock_parser.add_argument("docking_partners")
+
+    transform_parser = subparser.add_parser("transform")
     transform_parser.add_argument("chain")
-
     transform_parser.add_argument("-t", "--translate", nargs=3, type=float)
     transform_parser.add_argument("-r", "--rotate", nargs=3, type=float)
 
