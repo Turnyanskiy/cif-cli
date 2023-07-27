@@ -23,11 +23,18 @@ def test_get_model(filepath, expected):
     )
 
 
-def test_save_model():
+def test_save_model_as_pdb():
     filepath = "samples/7g93.cif"
     model = cif_cli.util.biopython.get_model(filepath)
-    cif_cli.util.biopython.save_model(model, filepath)
-    os.system("rm -r 7g93_transformed.cif")
+    cif_cli.util.biopython.save_model_as_pdb(model, "test.pdb")
+    os.system("rm -r test.pdb")
+
+
+def test_save_model_as_cif():
+    filepath = "samples/7g93.cif"
+    model = cif_cli.util.biopython.get_model(filepath)
+    cif_cli.util.biopython.save_model_as_pdb(model, "test.cif")
+    os.system("rm -r test.cif")
 
 
 @pytest.fixture(scope="session")
@@ -61,8 +68,8 @@ def test_get_pose(filepath, expected):
 
 
 @pytest.mark.usefixtures("test_pyrosetta_init")
-def test_save_pose():
+def test_save_pose_as_pdb():
     filepath = "samples/7g93.cif"
     model = cif_cli.util.pyrosetta.get_pose(filepath)
-    cif_cli.util.pyrosetta.save_pose(model, filepath)
-    os.system("rm -r 7g93_transformed.cif")
+    cif_cli.util.pyrosetta.save_pose_as_pdb(model, "test.pdb")
+    os.system("rm -r test.pdb")

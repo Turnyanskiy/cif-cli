@@ -1,6 +1,6 @@
 """Main logic."""
 import sys
-
+import os
 import pyrosetta
 import util.biopython
 import util.pyrosetta
@@ -33,7 +33,7 @@ def main():
 
         if pose := util.pyrosetta.get_pose(args.filepath):
             flexpepdock.FlexPepDockProtocol(args.docking_partners).apply(pose)
-            util.pyrosetta.save_pose(pose, args.filepath)
+            util.pyrosetta.save_pose_as_pdb(pose, args.output)
 
     elif args.subcommand == "transform":
         if model := util.biopython.get_model(args.filepath):
@@ -43,7 +43,13 @@ def main():
             if args.rotate:
                 transform.rotate_chain(model, args.chain, args.rotate)
 
-            util.biopython.save_model(model, args.filepath)
+            file_extension = os.path.splitext(args.ouutput)[1]
+            if file_extension == ".pdb":
+                util.biopython.save_model_as_pdb(model, args.output)
+            elif file_extension == ".cif":
+                util.biopython.save_model_as_cif(model, args.output)
+            else:
+                print("Not a output file path. (Must contain either .pdb or .cif extension)")
 
 
 if __name__ == "__main__":

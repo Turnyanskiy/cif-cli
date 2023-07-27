@@ -4,7 +4,7 @@ from typing import Optional
 import Bio
 from Bio.PDB import MMCIFParser, PDBParser
 from Bio.PDB.mmcifio import MMCIFIO
-
+from Bio.PDB.PDBIO import PDBIO
 
 def get_model(filepath: str) -> Optional[Bio.PDB.Model.Model]:
     """Retrieve the first model from a pdb/cif file.
@@ -20,16 +20,29 @@ def get_model(filepath: str) -> Optional[Bio.PDB.Model.Model]:
         return None
 
 
-def save_model(model: Bio.PDB.Model.Model, filepath: str) -> None:
+def save_model_as_cif(model: Bio.PDB.Model.Model, output: str) -> None:
     """Save model in cif file.
 
-    Model is saved in current working directory under the name
-    of "{old file name}_transformed.cif"
+    Model is saved using output filepath.
 
     :param model: The model to save
-    :param filepath: Filepath to original pdb/cif file
+    :param output: Filepath to output cif file
     :return: None
     """
     io = MMCIFIO()
     io.set_structure(model)
-    io.save(f'./{filepath.rsplit("/", maxsplit=1)[-1].split(".")[0]}_transformed.cif')
+    io.save(output) #f'./{filepath.rsplit("/", maxsplit=1)[-1].split(".")[0]}_transformed.cif'
+
+
+def save_model_as_pdb(model: Bio.PDB.Model.Model,  output: str) -> None:
+    """Save model in pdb file.
+
+    Model is saved using output filepath.
+
+    :param model: The model to save
+    :param output: Filepath to output pdb file
+    :return: None
+    """
+    io = PDBIO()
+    io.set_structure(model)
+    io.save(output)

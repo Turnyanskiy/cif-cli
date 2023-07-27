@@ -19,16 +19,13 @@ def get_pose(filepath: str) -> Optional[pyrosetta.Pose]:
     return None
 
 
-def save_pose(pose, filepath: str) -> None:
-    """Save pose in cif file.
+def save_pose_as_pdb(pose, output: str) -> None:
+    """Save pose in pdb file.
 
-    Pose is saved in current working directory under the name
-    of "{old file name}_transformed.cif"
+    Pose is saved using output filepath
 
     :param pose: The model to save
-    :param filepath: Filepath to original pdb/cif file
+    :param output: Filepath to output pdb file
     :return: None
     """
-    return pose.dump_pdb(
-        f'./{filepath.rsplit("/", maxsplit=1)[-1].split(".")[0]}_transformed.cif'
-    )
+    return pose.dump_pdb(output)
