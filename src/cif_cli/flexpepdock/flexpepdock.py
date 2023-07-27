@@ -113,7 +113,7 @@ class FlexPepDockProtocol:
         dt_st = pyrosetta.rosetta.core.scoring.ScoreType.dump_trajectory
         score_function.set_weight(dt_st, 1)
         emo = pyrosetta.rosetta.core.scoring.methods.EnergyMethodOptions()
-        emo.dump_trajectory_prefix('./test/work')
+        emo.dump_trajectory_prefix('./work')
         emo.dump_trajectory_stride(1000)
         DumpTrajectoryEnergy = pyrosetta.rosetta.core.energy_methods.DumpTrajectoryEnergy
         new_traj_energy = DumpTrajectoryEnergy(emo)
@@ -144,5 +144,6 @@ def build_packer(score_function) -> PackRotamersMover:
     task_factory.push_back(pack.task.operation.InitializeFromCommandline())
     task_factory.push_back(pack.task.operation.RestrictToRepacking())
     packer = PackRotamersMover(score_function)
+    packer.nloop(1)
     packer.task_factory(task_factory)
     return packer
