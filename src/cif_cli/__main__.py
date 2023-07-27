@@ -1,7 +1,7 @@
 """Main logic."""
-import sys
 import os
-import pyrosetta
+import sys
+
 import util.biopython
 import util.pyrosetta
 from cli import parser
@@ -20,6 +20,7 @@ def main():
     args = parser.parse_args(sys.argv[1:])
 
     if args.subcommand == "flexpepdock":
+        import pyrosetta
         pyrosetta.init(
             "-packing:ex1 "
             "-packing:ex2aro "
@@ -42,14 +43,16 @@ def main():
 
             if args.rotate:
                 transform.rotate_chain(model, args.chain, args.rotate)
-
-            file_extension = os.path.splitext(args.ouutput)[1]
+            
+            file_extension = os.path.splitext(args.output)[1]
             if file_extension == ".pdb":
                 util.biopython.save_model_as_pdb(model, args.output)
             elif file_extension == ".cif":
                 util.biopython.save_model_as_cif(model, args.output)
             else:
-                print("Not a output file path. (Must contain either .pdb or .cif extension)")
+                print(
+                    "Not a output file path. (Must contain either .pdb or .cif extension)"
+                )
 
 
 if __name__ == "__main__":

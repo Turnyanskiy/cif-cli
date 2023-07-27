@@ -24,6 +24,8 @@ def parse_args(args: list[str]) -> argparse.Namespace:
     transform_parser.add_argument("chain")
     transform_parser.add_argument("-t", "--translate", nargs=3, type=float)
     transform_parser.add_argument("-r", "--rotate", nargs=3, type=float)
-    transform_parser.add_argument("-o", "--output", nargs=1, type=str, default="transformed.pdb")
+    transform_parser.add_argument(
+        "-o", "--output", type=str, default="transformed.pdb"
+    )
 
     return parser.parse_args(args)
