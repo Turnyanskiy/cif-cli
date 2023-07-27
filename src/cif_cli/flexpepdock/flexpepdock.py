@@ -38,6 +38,7 @@ Typical usage example:
     # Dock it using FlexPepDockProtocol
     FlexPepDockProtocol(docking_partners="A_C").apply(pose=pose)
 """
+import pyrosetta
 from pyrosetta import Vector1
 from pyrosetta.rosetta.core import pack
 from pyrosetta.rosetta.core.pose import Pose
@@ -78,7 +79,7 @@ class FlexPepDockProtocol:
     def __repr__(self) -> str:
         """Return a string representation of a FlexPepDockProtocol instance."""
         docking_partners = self.docking_partners
-        return f"{type(self).__name__}({docking_partners=})"
+        return f"{type(self).__name__}({docking_partners})"
 
     def apply(self, pose: Pose) -> None:
         """Apply FlexPepDock protocol a PyRosetta pMHC pose. This function has side-effects.
@@ -103,8 +104,22 @@ class FlexPepDockProtocol:
             pose: PyRosetta pose.
         """
         pack_score_fn = ScoreFunctionFactory.create_score_function("docking")
+        new_traj_energy = self._enable_trajectory(pack_score_fn)
         packer = build_packer(pack_score_fn)
         packer.apply(pose)
+
+
+    def _enable_trajectory(self, score_function):
+        dt_st = pyrosetta.rosetta.core.scoring.ScoreType.dump_trajectory
+        score_function.set_weight(dt_st, 1)
+        emo = pyrosetta.rosetta.core.scoring.methods.EnergyMethodOptions()
+        emo.dump_trajectory_prefix('./test/work')
+        emo.dump_trajectory_stride(1000)
+        DumpTrajectoryEnergy = pyrosetta.rosetta.core.energy_methods.DumpTrajectoryEnergy
+        new_traj_energy = DumpTrajectoryEnergy(emo)
+        score_function.all_methods().append(new_traj_energy)
+        return new_traj_energy
+
 
     def _flex_pep_dock(self, pose: Pose) -> None:
         """Apply PyRosetta FlexPepDock docking to pose. This function has side-effects.
